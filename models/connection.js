@@ -4,10 +4,11 @@
 const MongoClient = require('mongodb').MongoClient;
 
 class Connection {
+  
     static async open() {
+      const URL = process.env.DATABASE_URL
       if (this.conn) return this.conn;
-      // this.conn = await mongoose.connect('mongodb://root:cedcommerce@127.0.0.1:27017/');
-      this.conn = await MongoClient.connect('mongodb://root:cedcommerce@127.0.0.1:27017/');
+      this.conn = await MongoClient.connect(URL);
       return this.conn;
     }
   }

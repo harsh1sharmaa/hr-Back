@@ -11,6 +11,9 @@ router.use((req, res, next) => {
 // define the home page route
 router.post("/register",register);
 router.post("/login",login);
+router.get("/",(req,res) => {
+  res.send({success:true,message:"ROOT"})
+});
 // router.post("/marklogin",markLogin);
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require("express");
 const bodyparser = require('body-parser')
 const {Connection}=require("./models/connection");
 const globalMiddleware = require("./middleware/authmiddleware");
+require('dotenv').config()
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.use(bodyparser.urlencoded({extended:false}))
 app.use(bodyparser.json())
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 4000;
 Connection.open();
 
 
@@ -21,6 +22,7 @@ const authRouter = require("./route/auth");
 console.log(app.get('env'))
 
 app.use("/auth", authRouter);
+app.use("/", authRouter);
 app.use(globalMiddleware.globalMiddleware);
 app.use("/user", userRouter);
 // app.use("/v1", leaveRouter);
