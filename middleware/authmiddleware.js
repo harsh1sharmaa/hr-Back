@@ -28,8 +28,10 @@ const globalMiddleware = (req, res, next) => {
         // console.log(decoded.userId);
         user_id = decoded.userId;
         email = decoded.email;
+        role = decoded.role;
         global.userId = user_id;
         global.email = email;
+        global.role = role;
         // req.decoded = decoded;
         next();
       }

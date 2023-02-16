@@ -12,8 +12,8 @@ const validateEmail = function (email) {
   }
   return false;
 };
-function generateAccessToken(username, userId) {
-  return jwt.sign({ email: username, userId: userId }, SECRET_KEY, {
+function generateAccessToken(username, userId,role) {
+  return jwt.sign({ email: username, userId: userId,role: role}, SECRET_KEY, {
     algorithm: "HS256",
     expiresIn: 60 * 60,
   });

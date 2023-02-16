@@ -6,6 +6,7 @@ const saveUser = async (data) => {
   let email = data.email;
   let password = data.password;
   let phone = data.phone;
+  let role = data.role;
   password = await helper.hashPassword(password);
   if (password === undefined) {
     return { success: false, message: "some error" };
@@ -24,6 +25,7 @@ const saveUser = async (data) => {
       email: email,
       password: password,
       phone: phone,
+      role:role,
       userstatus: "inactive",
       login: [],
     });
@@ -40,15 +42,15 @@ const saveUser = async (data) => {
 
 const updateUser = async (data) => {
   let userId = global.userId;
-  let otherinfo = data.otherinfo;
-  console.log(otherinfo);
+  let user_info = data.user_info;
+  console.log(user_info);
   const collection = Connection.conn.db("test").collection("userdetails2");
   try {
     const dbResponse = await collection.updateOne(
       {
         userId: userId,
       },
-      { $set: { otherinfo: otherinfo } }
+      { $set: { user_info: user_info } }
     );
     return { success: true, data: dbResponse };
   } catch (error) {
@@ -83,6 +85,7 @@ const updateUserLoggedIn = async (data) => {
   let userId = global.userId;
   let time = data.time;
   let date = data.date;
+  let sign_in_location = data.sign_in_location;
   console.log(new Date());
   const collection = Connection.conn.db("test").collection("loggedin");
   try {
@@ -90,7 +93,7 @@ const updateUserLoggedIn = async (data) => {
       {
         userId: userId,
       },
-      { $push: { login: { time: time, day: date } } }
+      { $push: { login: { time: time, day: date,sign_in_location:sign_in_location } } }
     );
     return { success: true, data: dbResponse };
   } catch (error) {
@@ -101,12 +104,17 @@ const updateUserLoggedIn = async (data) => {
 const validateLogin = async (data) => {
   const collection = Connection.conn.db("test").collection("userdetails2");
   let email = data.email;
+  let role = data.role;
   let password = data.password;
   password = await helper.hashPassword(password);
   console.log("in models password hash");
   console.log(password);
+  console.log(role);
+  console.log(email);
   try {
-    let validateResponse = await collection.find({ email: email }).toArray();
+    let validateResponse = await collection.find({ $and:[{email: email},{role:role }]}).toArray();
+  //  console.log(validateResponse);process.exit(0);
+
 
     console.log("validate Response in models ");
     console.log(validateResponse);

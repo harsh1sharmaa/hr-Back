@@ -6,6 +6,7 @@ const register = async (req, res) => {
   let password = req.body.password;
   let Rpassword = req.body.RePassword;
   let mobile = req.body.phone;
+  let role = req.body.role;
 
   if (
     password === undefined ||
@@ -50,6 +51,7 @@ const login = async (req, res) => {
   // let cocke=req.cookies['token'];  // code for getting cookies from frontend
   console.log("in login");
   let email = req.body.email;
+  let role = req.body.role;
   if (!auth.validateEmail(email)) {
     return res.send({ success: false, message: "invalid email" });
   }
@@ -71,7 +73,7 @@ const login = async (req, res) => {
     }); */
     //validate Email with DB Email Address
     if (userValidateResponse.success) {
-      let Token = auth.generateAccessToken(email, userId, );
+      let Token = auth.generateAccessToken(email, userId,role );
       res.cookie("token", Token); //set
       return res.send({
         success: true,

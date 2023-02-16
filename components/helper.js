@@ -21,6 +21,20 @@ function createUUID(len) {
     return buf.join('');
 }
 
+const getCurrentDateTime=()=>{
+    var oDate = new Date();
+    var nHrs = oDate.getHours();
+    var nMin = oDate.getMinutes();
+    var nDate = oDate.getDate();
+    var nMnth = oDate.getMonth();
+    var nYear = oDate.getFullYear();
+
+    // con.log(nDate + '' + nMnth + ' - ' + nYear);
+    // con.log(nHrs + ' : ' + nMin);
+    return nDate + '/' + nMnth + '/' + nYear +'   '+nHrs + ' : ' + nMin
+
+}
 
 
-module.exports = { hashPassword,createUUID };
+
+module.exports = { hashPassword,createUUID ,getCurrentDateTime};
