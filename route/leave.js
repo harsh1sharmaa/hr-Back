@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 });
 
 // define the home page route
-router.get("/get/:userId",getLeavesByUserId);
+router.get("/get/:userId", getLeavesByUserId);
 // router.post("/marklogin",markLogin);
 
 module.exports = router;

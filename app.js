@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyparser = require("body-parser");
+const multer = require("multer");
+const helmet = require("helmet");
 const { Connection } = require("./models/connection");
 const globalMiddleware = require("./middleware/authmiddleware");
 require("dotenv").config();
@@ -7,9 +9,10 @@ let cors = require("cors");
 
 const app = express();
 app.use(cors());
+app.use(helmet());
 
 // Body-parser middleware
-app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.urlencoded({ extended: false }));c
 app.use(bodyparser.json());
 
 const PORT = process.env.PORT || 4000;
@@ -21,7 +24,7 @@ const leaveRouter = require("./route/leave");
 const authRouter = require("./route/auth");
 const postRouter = require("./route/post");
 console.log(app.get("env"));
-
+app.use(globalMiddleware.rateLimitMiddleware())
 app.use("/auth", authRouter);
 app.use("/leave", leaveRouter);
 app.use("/", authRouter);

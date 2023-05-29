@@ -1,5 +1,5 @@
 const express = require("express");
-const { register,login } = require("../controllers/authController");
+const { register, login } = require("../controllers/authController");
 const router = express.Router();
 
 // middleware that is specific to this router
@@ -9,11 +9,12 @@ router.use((req, res, next) => {
 });
 
 // define the home page route
-router.post("/register",register);
-router.post("/login",login);
-router.get("/",(req,res) => {
-  res.send({success:true,message:"ROOT"})
-});
+router
+  .post("/register", register)
+  .post("/login", login)
+  .get("/", (req, res) => {
+    res.send({ success: true, message: "ROOT" });
+  });
 // router.post("/marklogin",markLogin);
 
 module.exports = router;

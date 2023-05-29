@@ -114,6 +114,15 @@ const applyLeave = async (req, res) => {
     res.send({ success: false, message: "required data is missing" });
   }
 };
+const uploadImage = async (req, res) => {
+  let data = req.file;
+  console.log(data);
+  // const uploadedFile = req.file;
+return res.send({data})
+  console.log(data);
+  process.exit(0);
+  
+};
 
 module.exports = {
   saveUserInfo,
@@ -122,4 +131,5 @@ module.exports = {
   getUserInfo,
   getLoginInfo,
   applyLeave,
+  uploadImage
 };
