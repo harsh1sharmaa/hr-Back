@@ -1,13 +1,13 @@
 const user = require("../models/user");
 const helperModel = require("../models/helper");
 const register = async (data) => {
-  console.log(data)
+  console.log(data);
 
   let isUserPresent = await helperModel.checkEmailExist(
     data.email,
     "userdetails2"
   );
- 
+
   // console.log("isUserPresent");
   // console.log(isUserPresent);
   if (isUserPresent === undefined) {
@@ -16,7 +16,7 @@ const register = async (data) => {
   if (isUserPresent.success) {
     return { success: false, message: isUserPresent.message };
   }
-/*   let isInactiveUserPresent = await helperModel.checkcheckEmailInInactiveUser(
+  /*   let isInactiveUserPresent = await helperModel.checkcheckEmailInInactiveUser(
     data.email,
     "userdetails"
   );
@@ -26,9 +26,12 @@ const register = async (data) => {
   } */
   let response = await user.saveUser(data);
   if (response !== undefined && response.success) {
-    return { success: true, data: response.data };
+    return { success: true, data: "user Registered Successfully" };
   } else {
-    return { success: false, data: response.message };
+    return {
+      success: false,
+      data: "user not  Registered please try again later",
+    };
   }
 };
 
@@ -42,4 +45,5 @@ const validateUser = async (data) => {
 };
 
 
-module.exports={register,validateUser}
+
+module.exports = { register, validateUser };

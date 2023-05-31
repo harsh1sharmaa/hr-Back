@@ -2,6 +2,8 @@ const { Connection } = require("./connection.js");
 const helper = require("../components/helper");
 
 const saveLeave = async (data) => {
+  // console.log(data);
+  // process.exit(0);
   let userId = global.userId;
   let to = data.to;
   let from = data.from;

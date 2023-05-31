@@ -12,7 +12,7 @@ app.use(cors());
 app.use(helmet());
 
 // Body-parser middleware
-app.use(bodyparser.urlencoded({ extended: false }));c
+app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
 const PORT = process.env.PORT || 4000;

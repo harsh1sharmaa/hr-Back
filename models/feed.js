@@ -22,7 +22,7 @@ const setUserFeed = async (data) => {
       postBy: role,
     });
     if (dbResponse.acknowledged) {
-      return { success: true, data: "posted success" };
+      return { success: true, data: "posted successfully" };
     }
     return { success: false, message: "plz try again.." };
   } catch (error) {

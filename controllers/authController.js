@@ -1,7 +1,6 @@
 const auth = require("../components/auth");
 const user = require("../components/user");
 const register = async (req, res) => {
-  
   let email = req.body.email;
   let password = req.body.password;
   let Rpassword = req.body.RePassword;
@@ -13,7 +12,7 @@ const register = async (req, res) => {
     Rpassword === undefined ||
     password.trim() !== Rpassword.trim()
   ) {
-    return res.send({ success: false, message: "Password not Same" });
+    return res.send({ success: false, message: "Your Password is not Same" });
   }
   if (
     email === undefined ||
@@ -21,7 +20,10 @@ const register = async (req, res) => {
     mobile === undefined ||
     mobile.trim() == ""
   ) {
-    return res.send({ success: false, message: "Password not Same" });
+    return res.send({
+      success: false,
+      message: "Your check your email or phone",
+    });
   }
   let validateEmailResponse = auth.validateEmail(email);
   if (!validateEmailResponse) {
@@ -29,7 +31,7 @@ const register = async (req, res) => {
   }
 
   let userResponse = await user.register(req.body);
-  return res.send({ success: true, data: userResponse });
+  return res.send(userResponse);
 
   /*   if (!userResponse.success) {
       return res.send({ success: false, message: userResponse.message });
@@ -66,20 +68,20 @@ const login = async (req, res) => {
   } else {
     console.log("userValidateResponse in controller");
     console.log(userValidateResponse);
-    userId=userValidateResponse.data.userId;
-/*     return res.send({
+    let userId = userValidateResponse.data.userId;
+    /*     return res.send({
       success: true,
       data:userValidateResponse.data ,
     }); */
     //validate Email with DB Email Address
     if (userValidateResponse.success) {
-      let Token = auth.generateAccessToken(email, userId,role );
+      let Token = auth.generateAccessToken(email, userId, role);
       res.cookie("token", Token); //set
       return res.send({
         success: true,
         data: {
           message: userValidateResponse.data.message,
-          token: Token
+          token: Token,
         },
       });
     } else {

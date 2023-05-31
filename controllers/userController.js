@@ -32,9 +32,10 @@ const markLogin = async (req, res) => {
   ) {
     try {
       let response = await updateUserLoggedIn(data);
-      res.status(200).send({ success: true, data: response });
+      res.status(200).send(response);
     } catch (error) {
-      res.status(500).send({ success: true, message: error });
+      //apply log
+      res.status(500).send({ success: false, message: "somthing went wrong" });
     }
   } else {
     res.send({ success: false, message: "some required data is missing" });
@@ -61,12 +62,12 @@ const getUserInfo = async (req, res) => {
   if (userId != undefined) {
     try {
       let response = await getUser(userId);
-      res.status(200).send({ success: true, data: response.data });
+      res.status(200).send(response);
     } catch (error) {
       res.status(500).send({ success: true, message: error });
     }
   } else {
-    res.send({ success: false, message: "user token error" });
+    res.send({ success: false, message: "something went wrong" });
   }
 };
 const getLoginInfo = async (req, res) => {
@@ -75,7 +76,7 @@ const getLoginInfo = async (req, res) => {
   if (userId != undefined) {
     try {
       let response = await getUserLogins(userId);
-      res.status(200).send({ success: true, data: response.data });
+      res.status(200).send(response);
     } catch (error) {
       res.status(500).send({ success: true, message: error });
     }
@@ -101,11 +102,12 @@ const applyLeave = async (req, res) => {
   ) {
     try {
       let response = await saveLeave(data);
-      if(response.success){
-
+      if (response.success) {
         return res.status(200).send({ success: true, data: response.data });
-      }else{
-        return res.status(200).send({ success: false, message: response.message });
+      } else {
+        return res
+          .status(200)
+          .send({ success: false, message: response.message });
       }
     } catch (error) {
       res.status(500).send({ success: true, message: error });
@@ -118,10 +120,9 @@ const uploadImage = async (req, res) => {
   let data = req.file;
   console.log(data);
   // const uploadedFile = req.file;
-return res.send({data})
+  return res.send({ data });
   console.log(data);
   process.exit(0);
-  
 };
 
 module.exports = {
@@ -131,5 +132,5 @@ module.exports = {
   getUserInfo,
   getLoginInfo,
   applyLeave,
-  uploadImage
+  uploadImage,
 };
